@@ -6,15 +6,15 @@ public class EnemyBalls : MonoBehaviour {
 	public float speed = 3f;
 	public Color color;
 
+	//private MeshRenderer _meshRenderer;
+	//private Collider _collider;
 	private Vector3 _direction;
-	private MeshRenderer _meshRenderer;
-	private Collider _collider;
 	private BallSpawner _spawner;
 
 	// Use this for initialization
 	void Start () {
-		_meshRenderer = GetComponent<MeshRenderer> ();
-		_collider = GetComponent<Collider> ();
+		//_meshRenderer = GetComponent<MeshRenderer> ();
+		//_collider = GetComponent<Collider> ();
 
 		GameObject spawnerObj = GameObject.Find ("/Ball Spawn");
 		_spawner = spawnerObj.GetComponent<BallSpawner> ();
