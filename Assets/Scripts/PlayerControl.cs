@@ -3,11 +3,12 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
-	public float speed = 4;
+	public float speed = 6;
 	public Vector3 respawnPosition;
 	public float leftLimit = -5;
 	public float rightLimit = 5;
-	public float bounceForce = 3;
+	public float wallBounce = 3;
+	public float enemyBounce = 300;
 
 	private Rigidbody rigidBody;
 
@@ -20,49 +21,60 @@ public class PlayerControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		//keepBallInBorder ();	
+
 	}
 
 	void FixedUpdate()
 	{
 		if (Input.GetButton ("Horizontal")) {
 			Vector3 translation = new Vector3 (Input.GetAxis("Horizontal") * speed, 0.0f);
-			rigidBody.AddForce(translation);
+			rigidBody.AddForce(translation, ForceMode.Acceleration);
+		}
+	}
+
+	void OnCollisionEnter(Collision col)
+	{
+		if (col.gameObject.CompareTag ("EnemyBall")) 
+		{
+			EnemyBalls ball = col.gameObject.GetComponent<EnemyBalls>();
+			if (ball != null) {
+				resetVelocity (true, true);
+				rigidBody.AddForce (transform.up * enemyBounce);
+				ball.destroyBall ();
+			}
 		}
 	}
 
 	void OnTriggerEnter(Collider col)
 	{
-		if(col.gameObject.CompareTag("Respawn"))
+		if(col.gameObject.CompareTag("LeftWall"))
 		{
-			//rigidBody.AddForce (transform.up * 1000);
-			respawnPosition.x = transform.position.x;
-			transform.position = respawnPosition;
-
-			Vector3 currentVelocity = rigidBody.velocity;
-			currentVelocity.y = 0.0f;
-			rigidBody.velocity = currentVelocity;
-		}
-		else if(col.gameObject.CompareTag("LeftWall"))
-		{
-			rigidBody.AddForce (transform.right * bounceForce);
+			rigidBody.AddForce (transform.right * wallBounce);
 		}
 		else if(col.gameObject.CompareTag("RightWall"))
 		{
-			rigidBody.AddForce (transform.right * bounceForce * -1);
+			rigidBody.AddForce (transform.right * wallBounce * -1);
 		}
 	}
 
-	void keepBallInBorder()
+	void OnTriggerExit(Collider col)
 	{
-		Vector3 newPosition = transform.position;
-		//transform.position.x = Mathf.Max (transform.position.x,);
-		if (transform.position.x < leftLimit)
-			newPosition.x = leftLimit;
-		else if (transform.position.x > rightLimit)
-			newPosition.x = rightLimit;
+		if(col.gameObject.CompareTag("Respawn"))
+		{
+			respawnPosition.x = transform.position.x;
+			transform.position = respawnPosition;
+			resetVelocity (false, true);
+		}
+	}
 
-		transform.position = newPosition;
-
+	void resetVelocity(bool resetX, bool resetY)
+	{
+		Vector3 currentVelocity = rigidBody.velocity;
+		if(resetY)
+			currentVelocity.y = 0.0f;
+		if (resetX)
+			currentVelocity.x = 0.0f;
+		
+		rigidBody.velocity = currentVelocity;
 	}
 }
