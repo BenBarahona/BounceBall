@@ -5,15 +5,13 @@ public class BallSpawner : MonoBehaviour {
 
 	public float spawnRate; //Seconds between spawns
 	public int maxBalls;
-	public float screenSize = 6.0f;
 	public GameObject ballPrefab;
 	public float maxY = 3.0f;
 	public float minY = -5.0f;
-
+    public float[] horizontalPositions = new float[2];
 	[HideInInspector]
 	public int ballCount;
-	[HideInInspector]
-	public float[] horizontalPositions = new float[2];
+	
 
 	float lastSpawnTime;
 	float timer;
@@ -23,8 +21,10 @@ public class BallSpawner : MonoBehaviour {
 	void Start () {
 		timer = Time.time;
 		ballCount = 0;
-		horizontalPositions [0] = -4.5f;
-		horizontalPositions [1] = 4.5f;
+		//horizontalPositions [0] = -4.5f;
+		//horizontalPositions [1] = 4.5f;
+        horizontalPositions[0] = -11.5f;
+        horizontalPositions [1] = 11.5f;
 	}
 	
 	// Update is called once per frame
