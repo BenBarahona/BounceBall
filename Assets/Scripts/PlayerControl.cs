@@ -8,7 +8,7 @@ public class PlayerControl : MonoBehaviour {
 	public float leftLimit = -5;
 	public float rightLimit = 5;
 	public float wallBounce = 3;
-	public float enemyBounce = 300;
+	public float enemyBounce = 10000;
 
 	private Rigidbody rigidBody;
 
