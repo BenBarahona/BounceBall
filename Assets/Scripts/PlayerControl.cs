@@ -8,7 +8,7 @@ public class PlayerControl : MonoBehaviour {
 	public float leftLimit = -5;
 	public float rightLimit = 5;
 	public float wallBounce = 3;
-	public float enemyBounce = 10000;
+	public float enemyBounce;
 
 	private Rigidbody rigidBody;
 
@@ -21,7 +21,6 @@ public class PlayerControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-
 	}
 
 	void FixedUpdate()

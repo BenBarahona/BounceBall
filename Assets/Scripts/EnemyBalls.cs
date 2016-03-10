@@ -16,7 +16,7 @@ public class EnemyBalls : MonoBehaviour {
 		//_meshRenderer = GetComponent<MeshRenderer> ();
 		//_collider = GetComponent<Collider> ();
 
-		GameObject spawnerObj = GameObject.Find ("/Ball Spawn");
+		GameObject spawnerObj = GameObject.FindGameObjectWithTag("GameController");
 		_spawner = spawnerObj.GetComponent<BallSpawner> ();
 		_direction = transform.position.x > 0 ? Vector3.left : Vector3.right;
 
