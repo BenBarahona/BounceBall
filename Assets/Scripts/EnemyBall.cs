@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyBalls : MonoBehaviour {
+public class EnemyBall : MonoBehaviour {
 
 	public float speed = 3f;
 	public Color color;
@@ -20,6 +20,7 @@ public class EnemyBalls : MonoBehaviour {
 		_spawner = spawnerObj.GetComponent<BallSpawner> ();
 		_direction = transform.position.x > 0 ? Vector3.left : Vector3.right;
 
+		//Make balls ignore physic interaction with other instances of this class
 		int layer = LayerMask.NameToLayer ("NPC Ignore Collision");
 		Physics.IgnoreLayerCollision (layer, layer);
 	}
@@ -52,6 +53,6 @@ public class EnemyBalls : MonoBehaviour {
 	public void destroyBall()
 	{
 		Destroy (gameObject);
-		_spawner.ballCount--;
+		_spawner.destroyBall();
 	}
 }
